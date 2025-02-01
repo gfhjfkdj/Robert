@@ -1,0 +1,384 @@
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⫸Roberto⫷</title>
+        <!-- أو يمكنك استخدام صورة PNG -->
+        <!-- <link rel="icon" href="assets/images/favicon.png" type="image/png"> -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            cursor: url('https://cdn.leanhduc.pro.vn/theme/theme-thong-tin-lien-he-version-2-0/images/mouse-f1.png'), auto;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+        }
+
+        .loader {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .loader-inner {
+            display: flex;
+            animation: spin 2s linear infinite;
+        }
+
+        .loader-line-wrap {
+            animation: spin 1s ease-out infinite;
+            margin: 0 5px;
+        }
+
+        .loader-line {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #fff;
+            margin: 0 5px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #bg {
+            background-image: url('assets/images/background.gif');
+            background-size: cover;
+            background-position: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            opacity: 1;
+            pointer-events: none;
+        }
+
+        .center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        #contact-text {
+            font-size: 24px;
+            margin-top: 30px;
+            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 300px;
+            animation: typing 4s steps(40) 1s forwards, blink 0.75s step-end infinite alternate;
+            background-color: black;
+            padding: 10px;
+            border-radius: 8px;
+            border: 2px solid #ffffff;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes typing {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        #avatar {
+            margin-bottom: 20px;
+            border-radius: 50%;
+            width: 180px;
+            height: 180px;
+            border: 5px solid #FF0000;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        #avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #avatar:hover {
+            box-shadow: 0 0 30px 10px rgba(255, 0, 0, 0.8);
+        }
+
+        #name {
+            font-size: 40px;
+            font-weight: bold;
+            color: #FF0000;
+            text-shadow: 2px 2px 5px rgba(255, 0, 0, 0.7);
+        }
+
+        #bio {
+            font-size: 22px;
+            font-family: 'Roboto', sans-serif;
+            color: #FF6347;
+            text-shadow: 1px 1px 3px rgba(255, 99, 71, 0.7);
+            margin-top: 10px;
+        }
+
+        .social-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* ثلاث أعمدة للأزرار */
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .social-buttons a {
+            padding: 15px 25px;
+            margin: 5px 0;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 20px;
+            text-align: center;
+            box-shadow: 0 0 10px 2px rgba(255, 0, 0, 0.5);
+            background-color: transparent;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .social-buttons a:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #FF6347, #FF0000);
+            z-index: -1;
+            animation: neonEffect 2s ease-in-out infinite alternate;
+        }
+
+        .social-buttons a:hover {
+            animation: animateButton 0.5s ease forwards;
+        }
+
+        @keyframes neonEffect {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(255, 99, 71, 1), 0 0 30px rgba(255, 99, 71, 1);
+            }
+            100% {
+                transform: scale(1.1);
+                box-shadow: 0 0 30px rgba(255, 0, 0, 1), 0 0 40px rgba(255, 0, 0, 1);
+            }
+        }
+
+        /* تأثير الحركة عند الاقتراب من الأزرار */
+        @keyframes animateButton {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        /* تنسيق الـ GIF في الزاوية السفلى اليسرى */
+        #gif-left {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 100px; /* حجم الـ GIF */
+            height: 100px;
+            z-index: 5;
+        }
+
+        /* تنسيق الـ GIF الثاني بالقرب من الأول */
+        #gif-right {
+            position: fixed;
+            bottom: 20px;
+            left: 120px; /* قريب من الـ GIF الأول */
+            width: 100px; /* نفس الحجم */
+            height: 100px;
+            z-index: 5;
+        }
+
+        /* تخصيص المظهر للأجهزة الصغيرة */
+        @media screen and (max-width: 768px) {
+            #avatar {
+                width: 150px;
+                height: 150px;
+            }
+
+            #name {
+                font-size: 30px;
+            }
+
+            #bio {
+                font-size: 18px;
+            }
+
+            .social-buttons {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            #contact-text {
+                font-size: 20px;
+                width: 250px;
+            }
+
+            #gif-left, #gif-right {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+        /* تخصيص المظهر للأجهزة الصغيرة جدًا */
+        @media screen and (max-width: 480px) {
+            #avatar {
+                width: 120px;
+                height: 120px;
+            }
+
+            #name {
+                font-size: 24px;
+            }
+
+            #bio {
+                font-size: 16px;
+            }
+
+            .social-buttons {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            #contact-text {
+                font-size: 16px;
+                width: 200px;
+            }
+
+            #gif-left, #gif-right {
+                width: 60px;
+                height: 60px;
+            }
+        }
+                /* إضافة نص الائتمان */
+                .credits {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 16px;
+            color: #fff;
+            text-align: center;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- إضافة الموسيقى -->
+    <audio id="background-music" autoplay loop>
+        <source src="assets/audio/mysound.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- شريط التحميل -->
+    <div class="loader" id="loader">
+        <div class="loader-inner">
+            <div class="loader-line-wrap"><div class="loader-line"></div></div>
+            <div class="loader-line-wrap"><div class="loader-line"></div></div>
+            <div class="loader-line-wrap"><div class="loader-line"></div></div>
+        </div>
+    </div>
+
+    <!-- خلفية الموقع -->
+    <div id="bg"></div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="center">
+        <div id="main">
+            <div id="avatar">
+                <img src="assets/images/avatar2.GIF" alt="الصورة الشخصية" />
+            </div>
+            <div id="name">.h_4s (discord)</div>
+            <div id="bio">نورت موقع</div>
+            <div id="contact-text"></div>
+
+            <!-- أزرار التواصل الاجتماعي -->
+            <div class="social-buttons">
+                <a href="https://www.facebook.com/profile.php?id=61570639304133" target="_blank" class="facebook"><i class="fab fa-facebook"></i> فيسبوك</a>
+                <a href="https://www.instagram.com/ليس متوفر" target="_blank" class="instagram"><i class="fab fa-instagram"></i> إنستغرام</a>
+                <a href="https://www.tiktok.com/@roberto_abdo" target="_blank" class="tiktok"><i class="fab fa-tiktok"></i> تيك توك</a>
+                <a href="https://www.youtube.com/@sghe-p5z" target="_blank" class="youtube"><i class="fab fa-youtube"></i> يوتيوب</a>
+                <a href="https://www.pinterest.com/mnarhm12" target="_blank" class="pinterest"><i class="fab fa-pinterest"></i> بنترست</a>
+                <a href="https://discord.com/users/1289581696995561495" target="_blank" class="discord"><i class="fab fa-discord"></i> ديسكورد</a>
+            </div>
+        </div>
+    </div>
+    <!-- إضافة الـ GIF في الزاوية السفلى اليسرى -->
+    <img id="gif-left" src="assets/images/yourgif.gif" alt="GIF Left">
+
+    <!-- إضافة الـ GIF الثاني بالقرب من الأول -->
+    <img id="gif-right" src="assets/images/yourgif2.gif" alt="GIF Right">
+    <div class="credits">تم التصميم بواسطة .h_4s</div>
+    <script>
+        const contactTextElement = document.getElementById('contact-text');
+        const phrases = ['اسمي: عبد الله', 'عمري: 15', 'هواياتي: المتعه' ,'وطني: مصر','الكراش: مافيش ']
+        let currentPhraseIndex = 0;
+
+        function typePhrase(phrase, index) {
+            contactTextElement.textContent = ''; // بداية كل عملية كتابة
+            let i = 0;
+
+            function write() {
+                if (i < phrase.length) {
+                    contactTextElement.textContent += phrase[i++];
+                    setTimeout(write, 100); // تأخير الكتابة
+                } else {
+                    setTimeout(() => {
+                        currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+                        typePhrase(phrases[currentPhraseIndex], currentPhraseIndex);
+                    }, 2000); // تأخير بين العبارات
+                }
+            }
+
+            write();
+        }
+
+        // بدء الكتابة أولاً
+        typePhrase(phrases[currentPhraseIndex], currentPhraseIndex);
+
+        // إخفاء شريط التحميل بعد تحميل الصفحة
+        window.addEventListener('load', function() {
+            document.getElementById('loader').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
